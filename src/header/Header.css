@@ -1,0 +1,31 @@
+.Head{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    color: aquamarine;
+    background: black;
+  }
+  
+  .Header{
+    width: 50%;
+  }
+  
+  .Header1{
+    font-size: 40px;
+  }
+  
+  .Header2{
+    font-size: 20px;
+  }
+  
+  .space{
+    width: 20%;
+  }
+  
+  .nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center ;
+    width: 10%;
+  }
