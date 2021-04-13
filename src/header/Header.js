@@ -1,7 +1,7 @@
 import { CgProfile } from 'react-icons/cg';
 import { BsTable } from 'react-icons/bs';
 import { BiFileFind } from 'react-icons/bi';
-import './Header.css';
+import '../styles/header.css';
 import {Link} from 'react-router-dom';
 
 function Header() {
@@ -14,9 +14,9 @@ function Header() {
         <div className="space"></div>
         
         
-        <div className="nav"><Link to="/query"><BiFileFind size={70}/></Link></div>
-        <div className="nav"><Link to="/tables"><BsTable size={60}/></Link></div>
-        <div className="nav"><Link to="/profile"><CgProfile size={70}/></Link></div>
+        <div className="nav"><Link to="/query" className="icons"><BiFileFind size={70}/></Link></div>
+        <div className="nav"><Link to="/tables" className="icons"><BsTable size={60}/></Link></div>
+        <div className="nav"><Link to="/profile" className="icons"><CgProfile size={70}/></Link></div>
         
       </div>
     );

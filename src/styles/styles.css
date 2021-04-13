@@ -1,0 +1,16 @@
+.container {
+    display:flex; 
+    flex-direction:row;
+}
+
+.container .A {
+    width: 50%;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.container .B {
+    width: 50%;
+    background-color: rgb(98, 98, 98);
+    padding: 20px;
+}

@@ -1,11 +1,11 @@
 import './App.css';
 
-import FindForm from './find-form/FindForm'
+// import FindForm from './find-form/FindForm'
 
 function App() {
   return (
     <div className="App">
-      <FindForm />
+      {/* <FindForm /> */}
     </div>
   );
 }
