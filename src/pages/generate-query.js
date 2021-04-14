@@ -12,15 +12,6 @@ class GenerateQuery extends Component {
         this.handleSqlResultChange = this.handleSqlResultChange.bind(this);
         this.generateSql = this.generateSql.bind(this);
         this.executeSql = this.executeSql.bind(this);
-        // this.fakeJson = [
-        //     {"fruit": "Apple", "cost": 100},
-        //     {"fruit": "Orange", "cost": 50},
-        //     {"fruit": "Banana", "cost": 35},
-        //     {"fruit": "Mango", "cost": 70},
-        //     {"fruit": "Pineapple", "cost": 45},
-        //     {"fruit": "Papaya", "cost": 40},
-        //     {"fruit": "Watermelon", "cost": 35}
-        //     ]
         this.fakeJson = [
             {"RESULTS": "no results found!"}
             ]
