@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import Header from './header/Header';
-import Routes from './routes/routes'
+import Routes from './routes/routes';
 
 ReactDOM.render(
   <BrowserRouter>

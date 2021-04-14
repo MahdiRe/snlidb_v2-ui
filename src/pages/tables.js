@@ -94,19 +94,19 @@ class Tables extends Component {
 
         return (
             <div className="container">
-                <div className="A">
+                <div className="C">
                     <h2>List of all tables</h2>
                     <ul>{listOfTables}</ul>
 
                 </div>
-                <div className="B">
+                <div className="D">
                     {isData ? (
                         <input type="text" value={this.state.table_status} />
                     ) : (
                         <JsonToTable json={this.state.table_data} />
                     )}
                 </div>
-                <div className="C">
+                <div className="E">
                     {isData ? (
                         <input type="text" value={this.state.table_status} />
                     ) : (

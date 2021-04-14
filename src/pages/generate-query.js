@@ -7,14 +7,19 @@ import { JsonToTable } from "react-json-to-table";
 class GenerateQuery extends Component {
     constructor() {
         super();
-        this.state = { query: '', sql_result: '' };
+        this.state = {
+            query: '',
+            sql: '',
+            result: '',
+            isText: false
+        };
         this.handleQueryChange = this.handleQueryChange.bind(this);
         this.handleSqlResultChange = this.handleSqlResultChange.bind(this);
         this.generateSql = this.generateSql.bind(this);
         this.executeSql = this.executeSql.bind(this);
         this.fakeJson = [
-            {"RESULTS": "no results found!"}
-            ]
+            { "RESULTS": "no results found!" }
+        ]
     }
 
     handleQueryChange(event) {
@@ -22,62 +27,71 @@ class GenerateQuery extends Component {
     }
 
     handleSqlResultChange(event) {
-        this.setState({ sql_result: event.target.value });
+        this.setState({ sql: event.target.value });
     }
 
     generateSql(event) {
         event.preventDefault();
         console.log(this.state.query)
         let jsonObj = { query: this.state.query };
-        axios.post('http://localhost:5000/query', jsonObj)
+        axios.post('http://localhost:5000/query/generate', jsonObj)
             .then(response => {
-                // this.setState({ articleId: response.data.id })
-                console.log(response);
-                this.setState({ sql_result: response.data })
+                this.setState({ sql: response.data })
             })
             .catch(error => {
-                // this.setState({ errorMessage: error.message });
                 console.error('There was an error!', error);
             });
     }
 
     executeSql(event) {
+        this.setState({ result: [] })
         event.preventDefault();
-        console.log(this.state.sql_result)
-        let jsonObj = { sql: this.state.sql_result };
-        axios.post('http://localhost:5000/execute', jsonObj)
+        let jsonObj = { sql: this.state.sql };
+        axios.post('http://localhost:5000/query/execute', jsonObj)
             .then(response => {
-                // this.setState({ articleId: response.data.id })
-                console.log(response);
+                console.log(response.data)
+                if (Array.isArray(response.data)) {
+                    if (response.data.length > 0) {
+                        this.setState({ result: response.data });
+                        this.setState({ isText: false });
+                    } else {
+                        this.setState({ result: "Executed successfully!" });
+                        this.setState({ isText: true });
+                    }
+                } else if (response.data == 'Exception found!') {
+                    this.setState({ result: "Exception, Please check your SQL format!" });
+                    this.setState({ isText: true });
+                }else{
+                    this.setState({ result: response.data });
+                    this.setState({ isText: true });
+                }
             })
             .catch(error => {
-                // this.setState({ errorMessage: error.message });
                 console.error('There was an error!', error);
-            }); 
+            });
     }
 
     render() {
-        const isText = false;
+        const isText = this.state.isText;
+        console.log(isText)
         return (
             <div className="container">
                 <div className="A">
-                    {/* <form onSubmit={this.handleSubmit}> */}
                     <form>
                         <label className="label">කුමක්ද ඔබ සොයන්නේ?</label>
                         <input type="text" value={this.state.query} onChange={this.handleQueryChange}
                             placeholder='උ.දා: ලකුනු 75ට වැඩි සිසුන්ගේ විස්තර ලබාදෙන්න' />
                         <input type="submit" value="SQL ලෙස පරිවර්තනය කරන්න" onClick={this.generateSql} />
                         <br></br>
-                        <input type="text" value={this.state.sql_result} onChange={this.handleSqlResultChange} />
+                        <input type="text" value={this.state.sql} onChange={this.handleSqlResultChange} />
                         <input type="submit" value="දත්ත ලබාගන්න" onClick={this.executeSql} />
                     </form>
                 </div>
                 <div className="B">
-                    { isText ? (
-                        <input type="text" value={this.state.query} onChange={this.handleQueryChange}
-                            placeholder='No results!' />
+                    {isText ? (
+                        <input type="text" value={this.state.result} />
                     ) : (
-                        <JsonToTable json={this.fakeJson} />
+                        <JsonToTable json={this.state.result} />
                     )}
                 </div>
             </div>

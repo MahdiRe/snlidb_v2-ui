@@ -1,17 +1,21 @@
-.container .A {
-    width: 33%;
-}
-
-.container .B {
-    width: 34%;
+.label{
+    font-size: 20px;
 }
 
 .container .C {
-    width: 33%;
+    width: 30%;
     background-color: #f2f2f2;
     padding: 20px;
 }
 
-.label{
-    font-size: 20px;
+.container .D {
+    width: 40%;
+    background-color: rgb(98, 98, 98);
+    padding: 20px;
+}
+
+.container .E {
+    width: 30%;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
