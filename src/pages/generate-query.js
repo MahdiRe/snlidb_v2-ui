@@ -3,6 +3,8 @@ import '../styles/generate-query.css';
 import '../styles/styles.css'
 import axios from 'axios';
 import { JsonToTable } from "react-json-to-table";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class GenerateQuery extends Component {
     constructor() {
@@ -11,7 +13,8 @@ class GenerateQuery extends Component {
             query: '',
             sql: '',
             result: '',
-            isText: false
+            isText: false,
+            isAuth: false
         };
         this.handleQueryChange = this.handleQueryChange.bind(this);
         this.handleSqlResultChange = this.handleSqlResultChange.bind(this);
@@ -22,6 +25,17 @@ class GenerateQuery extends Component {
         ]
     }
 
+    componentDidMount() {
+        let user = localStorage.getItem('auth_user');
+        console.log("user: " + user);
+        console.log(user)
+        if (user != null) {
+            this.setState({ isAuth: true });
+        } else {
+            this.setState({ isAuth: false });
+        }
+    }
+
     handleQueryChange(event) {
         this.setState({ query: event.target.value });
     }
@@ -30,45 +44,69 @@ class GenerateQuery extends Component {
         this.setState({ sql: event.target.value });
     }
 
+    loginAlert() {
+        confirmAlert({
+            title: 'Require Login',
+            message: 'This requirres login! Redirect to login page?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => this.props.history.push('/profile')
+                },
+                {
+                    label: 'No'
+                }
+            ]
+        });
+    }
+
     generateSql(event) {
         event.preventDefault();
-        console.log(this.state.query)
-        let jsonObj = { query: this.state.query };
-        axios.post('http://localhost:5000/query/generate', jsonObj)
-            .then(response => {
-                this.setState({ sql: response.data })
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+        if (this.state.isAuth) {
+            console.log(this.state.query)
+            let jsonObj = { query: this.state.query };
+            axios.post('http://localhost:5000/query/generate', jsonObj)
+                .then(response => {
+                    this.setState({ sql: response.data })
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        } else {
+            this.loginAlert();
+        }
     }
 
     executeSql(event) {
         this.setState({ result: [] })
         event.preventDefault();
-        let jsonObj = { sql: this.state.sql };
-        axios.post('http://localhost:5000/query/execute', jsonObj)
-            .then(response => {
-                console.log(response.data)
-                if (Array.isArray(response.data)) {
-                    if (response.data.length > 0) {
-                        this.setState({ result: response.data });
-                        this.setState({ isText: false });
+        if (this.state.isAuth) {
+            let jsonObj = { sql: this.state.sql };
+            axios.post('http://localhost:5000/query/execute', jsonObj)
+                .then(response => {
+                    console.log(response.data)
+                    if (Array.isArray(response.data)) {
+                        if (response.data.length > 0) {
+                            this.setState({ result: response.data });
+                            this.setState({ isText: false });
+                        } else {
+                            this.setState({ result: "Executed successfully!" });
+                            this.setState({ isText: true });
+                        }
+                    } else if (response.data == 'Exception found!') {
+                        this.setState({ result: "Exception, Please check your SQL format!" });
+                        this.setState({ isText: true });
                     } else {
-                        this.setState({ result: "Executed successfully!" });
+                        this.setState({ result: response.data });
                         this.setState({ isText: true });
                     }
-                } else if (response.data == 'Exception found!') {
-                    this.setState({ result: "Exception, Please check your SQL format!" });
-                    this.setState({ isText: true });
-                }else{
-                    this.setState({ result: response.data });
-                    this.setState({ isText: true });
-                }
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        } else {
+            this.loginAlert();
+        }
     }
 
     render() {

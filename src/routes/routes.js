@@ -1,8 +1,8 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Profile from '../pages/profile'
 import GenerateQuery from '../pages/generate-query';
-import Tables from'../pages/tables';
+import Tables from '../pages/tables';
 
 const Routes = () => (
     <Switch>
