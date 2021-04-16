@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-import Header from './header/Header';
+import Header from './component/header';
 import Routes from './routes/routes';
 
 ReactDOM.render(

@@ -3,6 +3,7 @@ import '../styles/generate-query.css';
 import '../styles/styles.css'
 import axios from 'axios';
 import { JsonToTable } from "react-json-to-table";
+import TableJson from '../component/table-json';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
@@ -12,17 +13,17 @@ class GenerateQuery extends Component {
         this.state = {
             query: '',
             sql: '',
-            result: '',
-            isText: false,
-            isAuth: false
+            result: 'Nothing is executed!',
+            isText: true,
+            isAuth: false,
+            modifySQL: false,
+            updateButtonText: "SQL වෙනස් කරන්න"
         };
         this.handleQueryChange = this.handleQueryChange.bind(this);
         this.handleSqlResultChange = this.handleSqlResultChange.bind(this);
         this.generateSql = this.generateSql.bind(this);
         this.executeSql = this.executeSql.bind(this);
-        this.fakeJson = [
-            { "RESULTS": "no results found!" }
-        ]
+        this.modifySQL = this.modifySQL.bind(this);
     }
 
     componentDidMount() {
@@ -109,6 +110,17 @@ class GenerateQuery extends Component {
         }
     }
 
+    modifySQL(event) {
+        event.preventDefault();
+        this.setState({modifySQL: !this.state.modifySQL});
+        if (this.state.modifySQL){
+            this.setState({updateButtonText: "SQL වෙනස් කරන්න"});
+        }else{
+            this.setState({updateButtonText: "SQL වෙනස් නොකරන්න"})
+        }
+        
+    }
+
     render() {
         const isText = this.state.isText;
         console.log(isText)
@@ -116,20 +128,21 @@ class GenerateQuery extends Component {
             <div className="container">
                 <div className="A">
                     <form>
-                        <label className="label">කුමක්ද ඔබ සොයන්නේ?</label>
+                        <label className="sin-big-label">කුමක්ද ඔබ සොයන්නේ?</label>
                         <input type="text" value={this.state.query} onChange={this.handleQueryChange}
                             placeholder='උ.දා: ලකුනු 75ට වැඩි සිසුන්ගේ විස්තර ලබාදෙන්න' />
-                        <input type="submit" value="SQL ලෙස පරිවර්තනය කරන්න" onClick={this.generateSql} />
+                        <input className="button-A" type="submit" value="SQL ලෙස පරිවර්තනය කරන්න" onClick={this.generateSql} />
                         <br></br>
-                        <input type="text" value={this.state.sql} onChange={this.handleSqlResultChange} />
-                        <input type="submit" value="දත්ත ලබාගන්න" onClick={this.executeSql} />
+                        <input disabled={!this.state.modifySQL} type="text" value={this.state.sql} onChange={this.handleSqlResultChange} />
+                        <input className="button-B" type="submit" value={this.state.updateButtonText} onClick={this.modifySQL} />
+                        <input className="button-C" type="submit" value="දත්ත ලබාගන්න" onClick={this.executeSql} />
                     </form>
                 </div>
                 <div className="B">
                     {isText ? (
                         <input type="text" value={this.state.result} />
                     ) : (
-                        <JsonToTable json={this.state.result} />
+                        <TableJson data={this.state.result} />
                     )}
                 </div>
             </div>

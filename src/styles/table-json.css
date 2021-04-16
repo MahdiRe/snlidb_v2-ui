@@ -1,0 +1,8 @@
+thead {color:black;}
+tbody {color:white;}
+table, th, td {
+ border: 1px solid black;
+}
+td, th{
+ padding: 5px;
+}

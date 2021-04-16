@@ -7,12 +7,17 @@
     width: 50%;
     background-color: #f2f2f2;
     padding: 20px;
+    padding-left: 4%;
+    padding-right: 4%;
 }
 
 .container .B {
     width: 50%;
     background-color: rgb(98, 98, 98);
     padding: 20px;
+    padding-left: 4%;
+    padding-right: 4%;
+    color: white;
 }
 
 input[type=text], select {
@@ -35,7 +40,7 @@ input[type=password], select {
     box-sizing: border-box;
 }
   
-input[type=submit] {
+/* input[type=submit] {
     width: 100%;
     background-color: #4CAF50;
     color: white;
@@ -44,8 +49,8 @@ input[type=submit] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
+} */
 
-input[type=submit]:hover {
+/* input[type=submit]:hover {
     background-color: #45a049;
-}
+} */

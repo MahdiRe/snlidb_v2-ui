@@ -3,6 +3,7 @@ import '../styles/tables.css';
 import '../styles/styles.css';
 import axios from 'axios';
 import { JsonToTable } from "react-json-to-table";
+import TableJson from '../component/table-json';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
@@ -130,7 +131,8 @@ class Tables extends Component {
                     {isData ? (
                         <input type="text" value={this.state.table_status} />
                     ) : (
-                        <JsonToTable json={this.state.table_data} />
+                        // <JsonToTable json={this.state.table_data} />
+                        <TableJson data={this.state.table_data} />
                     )}
                 </div>
                 <div className="E">

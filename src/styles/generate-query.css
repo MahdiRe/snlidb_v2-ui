@@ -1,5 +1,39 @@
-.label{
+.sin-big-label{
     font-size: 40px;
     font-weight: bold;
     font-family: "Lucida Handwriting";
+}
+
+.button-A {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-B {
+    width: 50%;
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border: 1px grey solid;
+    /* border-radius: 4px; */
+    cursor: pointer;
+}
+
+.button-C {
+    width: 50%;
+    background-color: white;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px black solid;
+    /* border-radius: 4px; */
+    cursor: pointer;
 }

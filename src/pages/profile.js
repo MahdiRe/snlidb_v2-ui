@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import '../styles/tables.css';
+import '../styles/profile.css';
 import '../styles/styles.css';
 import axios from 'axios';
 
@@ -142,7 +142,8 @@ class Profile extends Component {
                 <label className="label">Role</label>
                 <input disabled type="text" value={this.state.auth_role} onChange={this.userNameChange} />
 
-                <button onClick={this.logout}>Log out</button>
+                {/* <button onClick={this.logout}>Log out</button> */}
+                <input className="logout-btn" type="submit" value="Logout කරන්න" onClick={this.logout} />
 
               </form>
             </div>
@@ -152,30 +153,30 @@ class Profile extends Component {
           <div className="container">
             <div className="A">
               <form>
-                <label className="label">Username</label>
+                <label className="label">පරිශීලක නාමය/Username</label>
                 <input type="text" value={this.state.username} onChange={this.userNameChange} placeholder='උ.දා: ලකුනු' />
 
-                <label className="label">Password</label>
+                <label className="label">මුරපදය/Password</label>
                 <input type="password" value={this.state.password} onChange={this.passwordChange} placeholder='උ.දා: 15' />
 
-                <label className="label">Role</label>
+                <label className="label">කාර්යභාරය/Role</label>
                 <select name="roles" onChange={this.roleChange}>
-                  <option value="admin">admin</option>
-                  <option selected value="user">user</option>
+                  <option value="admin">admin/පරිපාලක</option>
+                  <option selected value="user">user/පරිශීලක</option>
                 </select>
 
-                <input type="submit" value="Register" onClick={this.register} />
+                <input className="register-btn" type="submit" value="ලියාපදිංචි වන්න" onClick={this.register} />
               </form>
             </div>
             <div className="B">
               <form>
-                <label className="label">Name</label>
+                <label className="label">පරිශීලක නාමය/Name</label>
                 <input type="text" value={this.state.l_username} onChange={this.lNameChange} placeholder='උ.දා: ලකුනු' />
 
-                <label className="label">Password</label>
+                <label className="label">මුරපදය/Password</label>
                 <input type="text" value={this.state.l_password} onChange={this.lPwdChange} placeholder='උ.දා: 15' />
 
-                <input type="submit" value="Log in" onClick={this.login} />
+                <input className="login-btn" type="submit" value="ඇතුල් වන්න" onClick={this.login} />
               </form>
             </div>
           </div>
