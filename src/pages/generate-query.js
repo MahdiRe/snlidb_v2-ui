@@ -17,7 +17,9 @@ class GenerateQuery extends Component {
             isText: true,
             isAuth: false,
             modifySQL: false,
-            updateButtonText: "SQL වෙනස් කරන්න"
+            updateButtonText: "SQL වෙනස් කරන්න",
+            user: '',
+            role: ''
         };
         this.handleQueryChange = this.handleQueryChange.bind(this);
         this.handleSqlResultChange = this.handleSqlResultChange.bind(this);
@@ -28,10 +30,9 @@ class GenerateQuery extends Component {
 
     componentDidMount() {
         let user = localStorage.getItem('auth_user');
-        console.log("user: " + user);
-        console.log(user)
+        let role = localStorage.getItem('auth_role');
         if (user != null) {
-            this.setState({ isAuth: true });
+            this.setState({ isAuth: true, user: user, role: role });
         } else {
             this.setState({ isAuth: false });
         }
@@ -61,10 +62,21 @@ class GenerateQuery extends Component {
         });
     }
 
+    roleAlert() {
+        confirmAlert({
+            title: 'Permission denied',
+            message: 'Only admin can make database changes!',
+            buttons: [
+                {
+                    label: 'Okay',
+                }
+            ]
+        });
+    }
+
     generateSql(event) {
         event.preventDefault();
         if (this.state.isAuth) {
-            console.log(this.state.query)
             let jsonObj = { query: this.state.query };
             axios.post('http://localhost:5000/query/generate', jsonObj)
                 .then(response => {
@@ -79,32 +91,26 @@ class GenerateQuery extends Component {
     }
 
     executeSql(event) {
-        this.setState({ result: [] })
         event.preventDefault();
         if (this.state.isAuth) {
-            let jsonObj = { sql: this.state.sql };
-            axios.post('http://localhost:5000/query/execute', jsonObj)
-                .then(response => {
-                    console.log(response.data)
-                    if (Array.isArray(response.data)) {
-                        if (response.data.length > 0) {
+            if (this.state.role != 'admin' && !this.state.sql.includes('SELECT')) {
+                this.roleAlert();
+            } else {
+                let jsonObj = { sql: this.state.sql };
+                axios.post('http://localhost:5000/query/execute', jsonObj)
+                    .then(response => {
+                        if (Array.isArray(response.data)) {
                             this.setState({ result: response.data });
                             this.setState({ isText: false });
                         } else {
-                            this.setState({ result: "Executed successfully!" });
+                            this.setState({ result: response.data });
                             this.setState({ isText: true });
                         }
-                    } else if (response.data == 'Exception found!') {
-                        this.setState({ result: "Exception, Please check your SQL format!" });
-                        this.setState({ isText: true });
-                    } else {
-                        this.setState({ result: response.data });
-                        this.setState({ isText: true });
-                    }
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                });
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            }
         } else {
             this.loginAlert();
         }
@@ -112,18 +118,17 @@ class GenerateQuery extends Component {
 
     modifySQL(event) {
         event.preventDefault();
-        this.setState({modifySQL: !this.state.modifySQL});
-        if (this.state.modifySQL){
-            this.setState({updateButtonText: "SQL වෙනස් කරන්න"});
-        }else{
-            this.setState({updateButtonText: "SQL වෙනස් නොකරන්න"})
+        this.setState({ modifySQL: !this.state.modifySQL });
+        if (this.state.modifySQL) {
+            this.setState({ updateButtonText: "SQL වෙනස් කරන්න" });
+        } else {
+            this.setState({ updateButtonText: "SQL වෙනස් නොකරන්න" })
         }
-        
+
     }
 
     render() {
         const isText = this.state.isText;
-        console.log(isText)
         return (
             <div className="container">
                 <div className="A">
@@ -131,11 +136,11 @@ class GenerateQuery extends Component {
                         <label className="sin-big-label">කුමක්ද ඔබ සොයන්නේ?</label>
                         <input type="text" value={this.state.query} onChange={this.handleQueryChange}
                             placeholder='උ.දා: ලකුනු 75ට වැඩි සිසුන්ගේ විස්තර ලබාදෙන්න' />
-                        <input className="button-A" type="submit" value="SQL ලෙස පරිවර්තනය කරන්න" onClick={this.generateSql} />
+                        <input disabled={!this.state.query} className="button-A" type="submit" value="SQL ලෙස පරිවර්තනය කරන්න" onClick={this.generateSql} />
                         <br></br>
                         <input disabled={!this.state.modifySQL} type="text" value={this.state.sql} onChange={this.handleSqlResultChange} />
                         <input className="button-B" type="submit" value={this.state.updateButtonText} onClick={this.modifySQL} />
-                        <input className="button-C" type="submit" value="දත්ත ලබාගන්න" onClick={this.executeSql} />
+                        <input disabled={!this.state.sql} className="button-C" type="submit" value="දත්ත ලබාගන්න" onClick={this.executeSql} />
                     </form>
                 </div>
                 <div className="B">

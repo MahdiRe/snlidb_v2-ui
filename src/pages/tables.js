@@ -18,7 +18,9 @@ class Tables extends Component {
             age: 0,
             marks: 0,
             table_status: 'No table selected!',
-            isAuth: false
+            isAuth: false,
+            user: '',
+            role: ''
         };
         this.handleOnClick = this.handleOnClick.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -30,10 +32,9 @@ class Tables extends Component {
     componentDidMount() {
         this.getAllTables();
         let user = localStorage.getItem('auth_user');
-        console.log("user: " + user);
-        console.log(user)
+        let role = localStorage.getItem('auth_role');
         if (user != null) {
-            this.setState({ isAuth: true });
+            this.setState({ isAuth: true, user: user, role: role });
         } else {
             this.setState({ isAuth: false });
         }
@@ -84,18 +85,33 @@ class Tables extends Component {
     insertData(event) {
         event.preventDefault();
         if (this.state.isAuth) {
-            let jsonObj = { name: this.state.name, age: this.state.age, marks: this.state.marks };
-            console.log(jsonObj)
-            axios.post('http://localhost:5000/tables/' + this.state.table + '/insert', jsonObj)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                });
+            if (this.state.role == 'admin'){
+                let jsonObj = { name: this.state.name, age: this.state.age, marks: this.state.marks };
+                axios.post('http://localhost:5000/tables/' + this.state.table + '/insert', jsonObj)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            }else{
+                this.roleAlert();   
+            }
         } else {
             this.loginAlert();
         }
+    }
+
+    roleAlert() {
+        confirmAlert({
+            title: 'Permission denied',
+            message: 'Only admin can make database changes!',
+            buttons: [
+                {
+                    label: 'Okay',
+                }
+            ]
+        });
     }
 
     loginAlert() {
@@ -149,7 +165,7 @@ class Tables extends Component {
                             <label className="label">Marks</label>
                             <input type="text" value={this.state.marks} onChange={this.handleMarksChange} placeholder='උ.දා: 75' />
 
-                            <input type="submit" value="INSERT කරන්න" onClick={this.insertData} />
+                            <input disabled={!this.state.name} className="insert-btn" type="submit" value="INSERT කරන්න" onClick={this.insertData} />
                         </form>)}
                 </div>
             </div>

@@ -2,6 +2,8 @@ import { Component } from 'react';
 import '../styles/profile.css';
 import '../styles/styles.css';
 import axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class Profile extends Component {
   constructor() {
@@ -27,11 +29,8 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    console.log(localStorage)
     let user = localStorage.getItem('auth_user');
     let role = localStorage.getItem('auth_role');
-    console.log("user: " + user + "& role: " + role);
-    console.log(user)
     if (user != null) {
       this.setState({
         isAuth: true,
@@ -85,33 +84,40 @@ class Profile extends Component {
   register(event) {
     event.preventDefault();
     let jsonObj = { username: this.state.username, password: this.state.password, role: this.state.role };
-    console.log(jsonObj)
     axios.post('http://localhost:5000/profile/register', jsonObj)
       .then(response => {
-        console.log(response);
+        this.profileAlert(response.data);
       })
       .catch(error => {
         console.error('There was an error!', error);
       });
-    console.log(JSON.parse(localStorage.getItem('auth')))
     localStorage.clear();
   }
+
+  profileAlert(alert) {
+    confirmAlert({
+        title: 'Profile Notification',
+        message: alert,
+        buttons: [
+            {
+                label: 'Okay',
+            }
+        ]
+    });
+}
 
   login(event) {
     event.preventDefault();
     let jsonObj = { username: this.state.l_username, password: this.state.l_password };
-    console.log(jsonObj)
     axios.post('http://localhost:5000/profile/login', jsonObj)
       .then(response => {
-        console.log(response);
         if (Array.isArray(response.data) && response.data.length != 0) {
-          console.log('Valid username or password!');
           localStorage.setItem('auth_user', response.data[0].user_name);
           localStorage.setItem('auth_role', response.data[0].role);
           this.setState({ isAuth: true, auth_user: response.data[0].user_name, auth_role: response.data[0].role });
           window.location.reload();
         } else {
-          console.log('Invalid username or password!')
+          this.profileAlert('Invalid username or password!')
         }
       })
       .catch(error => {
