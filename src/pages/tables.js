@@ -147,7 +147,6 @@ class Tables extends Component {
                     {isData ? (
                         <input type="text" value={this.state.table_status} />
                     ) : (
-                        // <JsonToTable json={this.state.table_data} />
                         <TableJson data={this.state.table_data} />
                     )}
                 </div>
@@ -157,7 +156,7 @@ class Tables extends Component {
                     ) : (
                         <form>
                             <label className="label">Name</label>
-                            <input type="text" value={this.state.name} onChange={this.handleNameChange} placeholder='උ.දා: ලකුනු' />
+                            <input type="text" value={this.state.name} onChange={this.handleNameChange} placeholder='උ.දා: සුනිල්' />
 
                             <label className="label">Age</label>
                             <input type="text" value={this.state.age} onChange={this.handleAgeChange} placeholder='උ.දා: 15' />

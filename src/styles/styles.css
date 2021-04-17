@@ -13,11 +13,12 @@
 
 .container .B {
     width: 50%;
-    background-color: rgb(98, 98, 98);
+    background-color: black;
     padding: 20px;
     padding-left: 4%;
     padding-right: 4%;
     color: white;
+    border: 1px solid white;
 }
 
 input[type=text], select {

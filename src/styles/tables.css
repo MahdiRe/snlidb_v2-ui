@@ -10,8 +10,9 @@
 
 .container .D {
     width: 40%;
-    background-color: rgb(98, 98, 98);
+    background-color: black;
     padding: 20px;
+    border: white 1px solid;
 }
 
 .container .E {

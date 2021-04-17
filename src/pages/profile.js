@@ -64,7 +64,6 @@ class Profile extends Component {
     this.setState({ username: event.target.value });
   }
 
-
   passwordChange(event) {
     this.setState({ password: event.target.value });
   }
@@ -140,17 +139,15 @@ class Profile extends Component {
       <div>
         { isAuth ? (
           <div className="container">
-            <div className="A">
-              <form>
-                <label className="label">Username</label>
+            <div className="F">
+              <form className="info-box">
+                <label className="label">පරිශීලක නාමය / Username</label>
                 <input disabled type="text" value={this.state.auth_user} onChange={this.userNameChange} />
 
-                <label className="label">Role</label>
+                <label className="label">කාර්යභාරය / Role</label>
                 <input disabled type="text" value={this.state.auth_role} onChange={this.userNameChange} />
 
-                {/* <button onClick={this.logout}>Log out</button> */}
-                <input className="logout-btn" type="submit" value="Logout කරන්න" onClick={this.logout} />
-
+                <input className="logout-btn" type="submit" value="ඉවත් වන්න / Log out" onClick={this.logout} />
               </form>
             </div>
           </div>
@@ -159,30 +156,30 @@ class Profile extends Component {
           <div className="container">
             <div className="A">
               <form>
-                <label className="label">පරිශීලක නාමය/Username</label>
-                <input type="text" value={this.state.username} onChange={this.userNameChange} placeholder='උ.දා: ලකුනු' />
+                <label className="label">පරිශීලක නාමය / Username</label>
+                <input type="text" value={this.state.username} onChange={this.userNameChange} placeholder='උ.දා: සුනිල්' />
 
-                <label className="label">මුරපදය/Password</label>
-                <input type="password" value={this.state.password} onChange={this.passwordChange} placeholder='උ.දා: 15' />
+                <label className="label">මුරපදය / Password</label>
+                <input type="password" value={this.state.password} onChange={this.passwordChange} />
 
-                <label className="label">කාර්යභාරය/Role</label>
+                <label className="label">කාර්යභාරය / Role</label>
                 <select name="roles" onChange={this.roleChange}>
                   <option value="admin">admin/පරිපාලක</option>
                   <option selected value="user">user/පරිශීලක</option>
                 </select>
 
-                <input className="register-btn" type="submit" value="ලියාපදිංචි වන්න" onClick={this.register} />
+                <input className="register-btn" type="submit" value="ලියාපදිංචි වන්න / Register" onClick={this.register} />
               </form>
             </div>
             <div className="B">
               <form>
-                <label className="label">පරිශීලක නාමය/Name</label>
-                <input type="text" value={this.state.l_username} onChange={this.lNameChange} placeholder='උ.දා: ලකුනු' />
+                <label className="label">පරිශීලක නාමය / Username</label>
+                <input type="text" value={this.state.l_username} onChange={this.lNameChange} placeholder='උ.දා: සුනිල්' />
 
-                <label className="label">මුරපදය/Password</label>
-                <input type="text" value={this.state.l_password} onChange={this.lPwdChange} placeholder='උ.දා: 15' />
+                <label className="label">මුරපදය / Password</label>
+                <input type="text" value={this.state.l_password} onChange={this.lPwdChange} />
 
-                <input className="login-btn" type="submit" value="ඇතුල් වන්න" onClick={this.login} />
+                <input className="login-btn" type="submit" value="ඇතුල් වන්න / Log in" onClick={this.login} />
               </form>
             </div>
           </div>
