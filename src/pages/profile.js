@@ -110,7 +110,7 @@ class Profile extends Component {
     let jsonObj = { username: this.state.l_username, password: this.state.l_password };
     axios.post('http://localhost:5000/profile/login', jsonObj)
       .then(response => {
-        if (Array.isArray(response.data) && response.data.length != 0) {
+        if (Array.isArray(response.data) && response.data.length !== 0) {
           localStorage.setItem('auth_user', response.data[0].user_name);
           localStorage.setItem('auth_role', response.data[0].role);
           this.setState({ isAuth: true, auth_user: response.data[0].user_name, auth_role: response.data[0].role });

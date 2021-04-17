@@ -2,7 +2,6 @@ import { Component } from 'react';
 import '../styles/tables.css';
 import '../styles/styles.css';
 import axios from 'axios';
-import { JsonToTable } from "react-json-to-table";
 import TableJson from '../component/table-json';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
@@ -85,7 +84,7 @@ class Tables extends Component {
     insertData(event) {
         event.preventDefault();
         if (this.state.isAuth) {
-            if (this.state.role == 'admin'){
+            if (this.state.role === 'admin'){
                 let jsonObj = { name: this.state.name, age: this.state.age, marks: this.state.marks };
                 axios.post('http://localhost:5000/tables/' + this.state.table + '/insert', jsonObj)
                     .then(response => {

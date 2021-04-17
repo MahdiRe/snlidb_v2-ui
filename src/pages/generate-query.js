@@ -2,7 +2,6 @@ import { Component } from 'react';
 import '../styles/generate-query.css';
 import '../styles/styles.css'
 import axios from 'axios';
-import { JsonToTable } from "react-json-to-table";
 import TableJson from '../component/table-json';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
@@ -93,7 +92,7 @@ class GenerateQuery extends Component {
     executeSql(event) {
         event.preventDefault();
         if (this.state.isAuth) {
-            if (this.state.role != 'admin' && !this.state.sql.includes('SELECT')) {
+            if (this.state.role !== 'admin' && !this.state.sql.includes('SELECT')) {
                 this.roleAlert();
             } else {
                 let jsonObj = { sql: this.state.sql };
