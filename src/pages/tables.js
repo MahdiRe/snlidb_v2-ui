@@ -88,7 +88,7 @@ class Tables extends Component {
                 let jsonObj = { name: this.state.name, age: this.state.age, marks: this.state.marks };
                 axios.post('http://localhost:5000/tables/' + this.state.table + '/insert', jsonObj)
                     .then(response => {
-                        console.log(response);
+                        this.insert_alert(response.data);
                     })
                     .catch(error => {
                         console.error('There was an error!', error);
@@ -124,6 +124,19 @@ class Tables extends Component {
                 },
                 {
                     label: 'No'
+                }
+            ]
+        });
+    }
+
+    insert_alert(msg){
+        confirmAlert({
+            title: 'Insert Notification',
+            message: msg,
+            buttons: [
+                {
+                    label: 'Okay',
+                    onClick: () => this.setState({name: '', age: 0, marks: 0})
                 }
             ]
         });

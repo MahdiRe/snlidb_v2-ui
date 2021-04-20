@@ -90,7 +90,6 @@ class GenerateQuery extends Component {
             this.loginAlert();
         }
         var t1 = performance.now()
-        console.log((t1-t0) + " ms")
     }
 
     executeSql(event) {
@@ -103,7 +102,6 @@ class GenerateQuery extends Component {
                 let jsonObj = { sql: this.state.sql };
                 axios.post('http://localhost:5000/query/execute', jsonObj)
                     .then(response => {
-                        console.log(response)
                         if (Array.isArray(response.data)) {
                             this.setState({ result_arr: response.data });
                             this.setState({ isText: false });
@@ -120,7 +118,6 @@ class GenerateQuery extends Component {
             this.loginAlert();
         }
         var t1 = performance.now()
-        console.log((t1-t0) + " ms")
     }
 
     modifySQL(event) {
