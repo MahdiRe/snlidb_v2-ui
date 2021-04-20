@@ -8,7 +8,7 @@ function Header() {
     return(
         <div className="Head">
         <div className="Header">
-          <div className="Header1">SNLIDB</div>
+          <div className="Header1">SNLIDB v2.0</div>
           <div className="Header2">(Sinhala Natural Language Interface for Databases)</div>
         </div>
         <div className="space"></div>

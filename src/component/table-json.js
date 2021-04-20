@@ -24,9 +24,14 @@ class TableJson extends Component {
     getRowsData = function () {
         var items = this.props.data;
         var keys = this.getKeys();
-        return items.map((row, index) => {
-            return <tr key={index}><RenderRow key={index} data={row} keys={keys} /></tr>
-        })
+        console.log(items)
+        if (items){
+            return items.map((row, index) => {
+                return <tr key={index}><RenderRow key={index} data={row} keys={keys} /></tr>
+            })
+        }else{
+
+        }
     }
 
     render() {

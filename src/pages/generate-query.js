@@ -12,7 +12,8 @@ class GenerateQuery extends Component {
         this.state = {
             query: '',
             sql: '',
-            result: 'Nothing is executed!',
+            result_txt: 'Nothing is executed!',
+            result_arr: [],
             isText: true,
             isAuth: false,
             modifySQL: false,
@@ -74,6 +75,7 @@ class GenerateQuery extends Component {
     }
 
     generateSql(event) {
+        var t0 = performance.now();
         event.preventDefault();
         if (this.state.isAuth) {
             let jsonObj = { query: this.state.query };
@@ -87,9 +89,12 @@ class GenerateQuery extends Component {
         } else {
             this.loginAlert();
         }
+        var t1 = performance.now()
+        console.log((t1-t0) + " ms")
     }
 
     executeSql(event) {
+        var t0 = performance.now();
         event.preventDefault();
         if (this.state.isAuth) {
             if (this.state.role !== 'admin' && !this.state.sql.includes('SELECT')) {
@@ -98,11 +103,12 @@ class GenerateQuery extends Component {
                 let jsonObj = { sql: this.state.sql };
                 axios.post('http://localhost:5000/query/execute', jsonObj)
                     .then(response => {
+                        console.log(response)
                         if (Array.isArray(response.data)) {
-                            this.setState({ result: response.data });
+                            this.setState({ result_arr: response.data });
                             this.setState({ isText: false });
                         } else {
-                            this.setState({ result: response.data });
+                            this.setState({ result_txt: response.data });
                             this.setState({ isText: true });
                         }
                     })
@@ -113,6 +119,8 @@ class GenerateQuery extends Component {
         } else {
             this.loginAlert();
         }
+        var t1 = performance.now()
+        console.log((t1-t0) + " ms")
     }
 
     modifySQL(event) {
@@ -144,9 +152,9 @@ class GenerateQuery extends Component {
                 </div>
                 <div className="B">
                     {isText ? (
-                        <input type="text" value={this.state.result} />
+                        <input type="text" value={this.state.result_txt} />
                     ) : (
-                        <TableJson data={this.state.result} />
+                        <TableJson data={this.state.result_arr} />
                     )}
                 </div>
             </div>

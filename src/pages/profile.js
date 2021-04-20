@@ -177,7 +177,7 @@ class Profile extends Component {
                 <input type="text" value={this.state.l_username} onChange={this.lNameChange} placeholder='උ.දා: සුනිල්' />
 
                 <label className="label">මුරපදය / Password</label>
-                <input type="text" value={this.state.l_password} onChange={this.lPwdChange} />
+                <input type="password" value={this.state.l_password} onChange={this.lPwdChange} />
 
                 <input className="login-btn" type="submit" value="ඇතුල් වන්න / Log in" onClick={this.login} />
               </form>
