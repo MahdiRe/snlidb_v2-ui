@@ -42,7 +42,7 @@ class Tables extends Component {
     getAllTables() {
         axios.get('http://localhost:5000/tables')
             .then(response => {
-                this.setState({ tables_list: response.data })
+                this.setState({ tables_list: response.data });
             })
             .catch(error => {
                 console.error('There was an error!', error);

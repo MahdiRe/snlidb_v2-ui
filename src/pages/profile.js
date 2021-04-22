@@ -86,6 +86,7 @@ class Profile extends Component {
     axios.post('http://localhost:5000/profile/register', jsonObj)
       .then(response => {
         this.profileAlert(response.data);
+        this.setState({username: '', password: ''});
       })
       .catch(error => {
         console.error('There was an error!', error);

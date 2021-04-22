@@ -1,0 +1,62 @@
+  
+.popup {  
+    position: fixed;  
+    width: 100%;  
+    height: 100%;  
+    top: 0;  
+    left: 0;  
+    right: 0;  
+    bottom: 0;  
+    margin: auto;  
+    background-color: rgba(0,0,0, 0.5);  
+  }  
+  .popup_open {
+    position: absolute;  
+    left: 25%;  
+    right: 25%;  
+    top: 10%;  
+    bottom: 5%;  
+    margin: auto;  
+    border-radius: 20px;  
+    background: white;
+    padding: 2%;
+    padding-top: 0%;
+    padding-bottom: 0%;
+  }
+
+  .errspan {
+    float: right;
+    margin-right: 10px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 2;
+    color: black;
+}
+
+.guide-samples {
+    border: black 1px solid;
+    height: 55%;
+    overflow: auto;
+    padding: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.popup-btn {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.exp-res {
+  color: white;
+  background-color: gray;
+  font-weight: bold;
+  font-style: italic;
+}
