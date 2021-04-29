@@ -86,7 +86,7 @@ class Profile extends Component {
     axios.post('http://localhost:5000/profile/register', jsonObj)
       .then(response => {
         this.profileAlert(response.data);
-        this.setState({username: '', password: ''});
+        this.setState({ username: '', password: '' });
       })
       .catch(error => {
         console.error('There was an error!', error);
@@ -96,15 +96,15 @@ class Profile extends Component {
 
   profileAlert(alert) {
     confirmAlert({
-        title: 'Profile Notification',
-        message: alert,
-        buttons: [
-            {
-                label: 'Okay',
-            }
-        ]
+      title: 'Profile Notification',
+      message: alert,
+      buttons: [
+        {
+          label: 'Okay',
+        }
+      ]
     });
-}
+  }
 
   login(event) {
     event.preventDefault();
@@ -138,7 +138,7 @@ class Profile extends Component {
 
     return (
       <div>
-        { isAuth ? (
+        {isAuth ? (
           <div className="container">
             <div className="F">
               <form className="info-box">
@@ -185,7 +185,11 @@ class Profile extends Component {
             </div>
           </div>
         )}
+        <div className="footer">
+          <input className="guide" type="submit" value="Need help? Check the guide from here!" onClick={this.guide} />
+        </div>
       </div>
+
     );
   }
 }

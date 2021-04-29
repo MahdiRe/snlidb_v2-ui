@@ -171,18 +171,14 @@ class GenerateQuery extends Component {
                     </div>
                 </div>
 
-                <div>
-                    {/* <input className="" type="submit" value="A guide for 'How to generate the query?''" onClick={this.handlePopupChange} /> */}
-
-                    <span className="sample-codes" data-tip="click here for sample demo" onClick={this.handlePopupChange}><MdLiveHelp size={50} /></span>
-                    <ReactTooltip effect="solid" />
-
+                <div className="footer">
+                    <input className="guide" type="submit" value="Need help? Check the guide from here!" onClick={this.guide} />
                     {this.state.popup ? (
                         <Popup closePopup={this.handlePopupChange} />
                     ) : (
                         null
                     )}
-
+                    <input className="sample" type="submit" value="Want to try out? Get sample queries from here!" onClick={this.handlePopupChange} />
                 </div>
             </div>
         );

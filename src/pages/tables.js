@@ -84,7 +84,7 @@ class Tables extends Component {
     insertData(event) {
         event.preventDefault();
         if (this.state.isAuth) {
-            if (this.state.role === 'admin'){
+            if (this.state.role === 'admin') {
                 let jsonObj = { name: this.state.name, age: this.state.age, marks: this.state.marks };
                 axios.post('http://localhost:5000/tables/' + this.state.table + '/insert', jsonObj)
                     .then(response => {
@@ -93,8 +93,8 @@ class Tables extends Component {
                     .catch(error => {
                         console.error('There was an error!', error);
                     });
-            }else{
-                this.roleAlert();   
+            } else {
+                this.roleAlert();
             }
         } else {
             this.loginAlert();
@@ -129,14 +129,14 @@ class Tables extends Component {
         });
     }
 
-    insert_alert(msg){
+    insert_alert(msg) {
         confirmAlert({
             title: 'Insert Notification',
             message: msg,
             buttons: [
                 {
                     label: 'Okay',
-                    onClick: () => this.setState({name: '', age: 0, marks: 0})
+                    onClick: () => this.setState({ name: '', age: 0, marks: 0 })
                 }
             ]
         });
@@ -149,35 +149,40 @@ class Tables extends Component {
         );
 
         return (
-            <div className="container">
-                <div className="C">
-                    <h2>List of all tables</h2>
-                    <ul>{listOfTables}</ul>
+            <div>
+                <div className="container">
+                    <div className="C">
+                        <h2>List of all tables</h2>
+                        <ul>{listOfTables}</ul>
 
+                    </div>
+                    <div className="D">
+                        {isData ? (
+                            <input type="text" value={this.state.table_status} />
+                        ) : (
+                            <TableJson data={this.state.table_data} />
+                        )}
+                    </div>
+                    <div className="E">
+                        {isData ? (
+                            <input type="text" value={this.state.table_status} />
+                        ) : (
+                            <form>
+                                <label className="label">Name</label>
+                                <input type="text" value={this.state.name} onChange={this.handleNameChange} placeholder='උ.දා: සුනිල්' />
+
+                                <label className="label">Age</label>
+                                <input type="text" value={this.state.age} onChange={this.handleAgeChange} placeholder='උ.දා: 15' />
+
+                                <label className="label">Marks</label>
+                                <input type="text" value={this.state.marks} onChange={this.handleMarksChange} placeholder='උ.දා: 75' />
+
+                                <input disabled={!this.state.name} className="insert-btn" type="submit" value="INSERT කරන්න" onClick={this.insertData} />
+                            </form>)}
+                    </div>
                 </div>
-                <div className="D">
-                    {isData ? (
-                        <input type="text" value={this.state.table_status} />
-                    ) : (
-                        <TableJson data={this.state.table_data} />
-                    )}
-                </div>
-                <div className="E">
-                    {isData ? (
-                        <input type="text" value={this.state.table_status} />
-                    ) : (
-                        <form>
-                            <label className="label">Name</label>
-                            <input type="text" value={this.state.name} onChange={this.handleNameChange} placeholder='උ.දා: සුනිල්' />
-
-                            <label className="label">Age</label>
-                            <input type="text" value={this.state.age} onChange={this.handleAgeChange} placeholder='උ.දා: 15' />
-
-                            <label className="label">Marks</label>
-                            <input type="text" value={this.state.marks} onChange={this.handleMarksChange} placeholder='උ.දා: 75' />
-
-                            <input disabled={!this.state.name} className="insert-btn" type="submit" value="INSERT කරන්න" onClick={this.insertData} />
-                        </form>)}
+                <div className="footer">
+                    <input className="guide" type="submit" value="Need help? Check the guide from here!" onClick={this.guide} />
                 </div>
             </div>
         );

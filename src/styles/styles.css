@@ -40,3 +40,29 @@ input[type=password], select {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+.footer {
+    padding: 2%;
+}
+
+.guide {
+    width: 25%;
+    background-color: white;
+    color: black;
+    padding: 14px 20px;
+    margin-left: 10%;
+    border: 1px solid black;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.sample {
+    width: 25%;
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin-left: 5%;
+    border: 1px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+}
