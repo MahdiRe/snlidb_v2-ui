@@ -6,8 +6,6 @@ import TableJson from '../component/table-json';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Popup from '../component/popup';
-import { MdLiveHelp } from 'react-icons/md';
-import ReactTooltip from 'react-tooltip';
 
 
 class GenerateQuery extends Component {
@@ -84,6 +82,18 @@ class GenerateQuery extends Component {
         });
     }
 
+    alertAny(title, desc) {
+        confirmAlert({
+            title: title,
+            message: desc,
+            buttons: [
+                {
+                    label: 'Okay',
+                }
+            ]
+        });
+    }
+
     generateSql(event) {
         var t0 = performance.now();
         event.preventDefault();
@@ -91,7 +101,11 @@ class GenerateQuery extends Component {
             let jsonObj = { query: this.state.query };
             axios.post('http://localhost:5000/query/generate', jsonObj)
                 .then(response => {
-                    this.setState({ sql: response.data })
+                    if (response.data === ';'){
+                        this.alertAny("Invalid query", "Please check your Sinhala natural language query and try again!");
+                    }else{
+                        this.setState({ sql: response.data });
+                    }
                 })
                 .catch(error => {
                     console.error('There was an error!', error);
