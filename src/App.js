@@ -20,8 +20,15 @@ const App = () => {
   const [sqlQuery, setSqlQuery] = useState("");
   const [intent, setIntent] = useState("");
   const [entities, setEntities] = useState([]);
+  const [error, setError] = useState(false);
 
   const handleGenerate = async () => {
+    if (!inputQuery.trim()) {
+      setError(true);
+      return;
+    }
+    setError(false);
+
     try {
       const res = await axios.post("http://localhost:5000/query", {
         query: inputQuery,
@@ -41,6 +48,7 @@ const App = () => {
     setSqlQuery("");
     setIntent("");
     setEntities([]);
+    setError(false);
   };
 
   return (
@@ -57,6 +65,8 @@ const App = () => {
           label="Enter Sinhala Query"
           value={inputQuery}
           onChange={(e) => setInputQuery(e.target.value)}
+          error={error}
+          helperText={error ? "Please enter a Sinhala query before generating." : ""}
           style={{ marginBottom: "20px" }}
         />
 
