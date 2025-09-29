@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-import Header from './component/header';
-import Routes from './routes/routes';
+import App from './App';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Header />
-    <Routes />
+    <App />
   </BrowserRouter>,
   document.getElementById('roots')
 );
