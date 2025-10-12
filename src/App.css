@@ -1,0 +1,30 @@
+.main-panel {
+    display: flex;
+    height: 100vh;
+}
+
+.left-panel {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-panel,
+.output-panel {
+    flex: 1;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.output-panel {
+    border-bottom: none;
+}
+
+.right-panel {
+    width: 40%;
+    padding: 10px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    border-left: 1px solid #ccc;
+}
