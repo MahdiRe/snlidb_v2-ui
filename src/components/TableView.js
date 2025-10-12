@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const TableView = () => {
+const TableView = ({ update }) => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -8,7 +8,7 @@ const TableView = () => {
       .then((res) => res.json())
       .then((data) => setStudents(data))
       .catch((err) => console.error("Error fetching students:", err));
-  }, []);
+  }, [update]);
 
   return (
     <div>
@@ -39,6 +39,8 @@ const TableView = () => {
           ))}
         </tbody>
       </table>
+
+      {students.length === 0 && <p>No data available!</p>}
     </div>
   );
 };

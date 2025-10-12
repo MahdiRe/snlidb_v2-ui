@@ -11,28 +11,48 @@ import {
 } from "@material-ui/core";
 
 const OutputView = ({ output }) => {
+  // If reset or no result yet → show nothing
+  if (!output) return null;
 
-  if (!Array.isArray(output) || output.length === 0) {
-    return null;
+  // If it's an error
+  if (output.type === "error") {
+    return (
+      <Typography color="error" style={{ marginTop: "20px" }}>
+        ❌ {output.message}
+      </Typography>
+    );
   }
 
-  // Preferred order
+  // If it's NOT a SELECT, e.g. insert/update/delete
+  if (output.type !== "select") {
+    return (
+      <Typography style={{ marginTop: "20px" }}>
+        ✅ {output.message} <br />
+        Rows affected: {output.rows_affected}
+      </Typography>
+    );
+  }
+
+  // If it's a SELECT but no rows
+  if (!Array.isArray(output.data) || output.data.length === 0) {
+    return (
+      <Typography style={{ marginTop: "20px" }}>
+        No results found.
+      </Typography>
+    );
+  }
+
+  // ✅ Now render the table...
+  const rows = output.data;
   const preferredOrder = ["id", "name", "age", "marks"];
+  const actualColumns = Object.keys(rows[0]);
 
-  // Actual columns returned from query
-  const actualColumns = Object.keys(output[0]);
-
-  // Step 1: Keep the preferred columns that exist
   const orderedColumns = preferredOrder.filter((col) =>
     actualColumns.includes(col)
   );
-
-  // Step 2: Add any remaining columns (not in preferred list)
   const remainingColumns = actualColumns.filter(
     (col) => !preferredOrder.includes(col)
   );
-
-  // Final column order to display
   const finalColumns = [...orderedColumns, ...remainingColumns];
 
   return (
@@ -52,9 +72,8 @@ const OutputView = ({ output }) => {
               ))}
             </TableRow>
           </TableHead>
-
           <TableBody>
-            {output.map((row, rowIndex) => (
+            {rows.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
                 {finalColumns.map((col, colIndex) => (
                   <TableCell key={colIndex}>

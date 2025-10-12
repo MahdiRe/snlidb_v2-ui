@@ -15,13 +15,13 @@ import {
 } from "@material-ui/core";
 import OutputView from "./OutputView";
 
-const InputView = () => {
+const InputView = ({ refresh }) => {
   const [inputQuery, setInputQuery] = useState("");
   const [sqlQuery, setSqlQuery] = useState("");
   const [intent, setIntent] = useState("");
   const [entities, setEntities] = useState([]);
   const [error, setError] = useState(false);
-  const [output, setOutput] = useState([]);
+  const [output, setOutput] = useState(null);
 
   const handleGenerate = async () => {
     if (!inputQuery.trim()) {
@@ -38,6 +38,7 @@ const InputView = () => {
       setSqlQuery(res.data.sql || "");
       setIntent(res.data.intent || "");
       setEntities(res.data.entities || []);
+      setOutput(null);
     } catch (err) {
       console.error(err);
       setSqlQuery("Error generating SQL");
@@ -50,7 +51,7 @@ const InputView = () => {
     setIntent("");
     setEntities([]);
     setError(false);
-    setOutput([]);
+    setOutput(null);
   };
 
   const executeQuery = async () => {
@@ -59,7 +60,17 @@ const InputView = () => {
         query: sqlQuery,
       });
 
-      setOutput(res.data)
+      if (res.data.type === "select") {
+        setOutput({ type: "select", data: res.data.data });
+      } else {
+        setOutput({
+          type: res.data.type,
+          message: res.data.message,
+          rows_affected: res.data.rows_affected,
+        });
+      }
+
+      refresh();
     } catch (err) {
       console.error(err);
       setSqlQuery("Error executing SQL");
